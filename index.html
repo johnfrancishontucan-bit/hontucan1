@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sir JohnFrancis Hontucan — Aspiring Software Engineer</title>
+<meta name="description" content="Portfolio of Sir JohnFrancis Hontucan, BSIT graduate and aspiring entry-level software engineer. Projects in C++, C#, Java, and front-end web." />
+<meta name="author" content="Sir JohnFrancis Hontucan" />
+<meta name="theme-color" content="#0b0e14" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOc6nlwlHtf9LstjpOe6Z+Q== Sha384-o9T5qOc7fBbC3r0J8Zt4qz3z3J7Wm4LPhB6Z3LPhB6Z3LPhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+:root{
+  --bg:#0b0e14;
+  --bg-alt:#0f1420;
+  --panel:#111725;
+  --panel-hi:#161d2e;
+  --line:#1e2637;
+  --line-hi:#2a3446;
+  --text:#e6edf3;
+  --muted:#8b98ad;
+  --dim:#5f6b7d;
+  --accent:#2ea44f;
+  --accent-hi:#3fb950;
+  --blue:#58a6ff;
+  --cyan:#39c5cf;
+  --amber:#d29922;
+  --violet:#a371f7;
+  --pink:#f778ba;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --max:1080px;
+  --radius:10px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* subtle grid backdrop */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(46,164,79,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(46,164,79,.035) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+  z-index:0;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);
+}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- scroll progress ---------- */
+#progress{
+  position:fixed;top:0;left:0;height:2px;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--blue),var(--violet));
+  z-index:99;transition:width .1s linear;
+}
+
+/* ---------- nav ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(11,14,20,.8);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s,background .3s;
+}
+header.scrolled{border-bottom-color:var(--line);background:rgba(11,14,20,.95)}
+nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{
+  font-family:var(--mono);font-size:14px;font-weight:500;
+  color:var(--text);display:flex;align-items:center;gap:9px;
+}
+.brand:hover{text-decoration:none}
+.brand i{color:var(--accent-hi);font-size:12px}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{
+  font-family:var(--mono);font-size:12.5px;color:var(--muted);
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--accent-hi);text-decoration:none}
+.nav-toggle{
+  display:none;background:none;border:1px solid var(--line);
+  color:var(--muted);width:34px;height:32px;border-radius:6px;cursor:pointer;
+}
+
+/* ---------- hero ---------- */
+.hero{padding:132px 0 90px}
+h1{
+  font-size:clamp(2rem,5vw,3.1rem);font-weight:700;
+  line-height:1.15;letter-spacing:-.025em;margin-bottom:18px;
+}
+.typed-line{color:var(--muted);font-weight:300;font-size:clamp(1.05rem,2.4vw,1.35rem);margin-bottom:22px}
+.typed-line b{color:var(--cyan);font-weight:500}
+.hero-desc{max-width:640px;color:var(--muted);margin-bottom:30px}
+.hero-desc strong{color:var(--text);font-weight:500}
+
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:11px 20px;border-radius:7px;border:1px solid var(--line-hi);
+  font-family:var(--mono);font-size:13px;font-weight:500;
+  transition:.2s;background:var(--panel);color:var(--text);
+}
+.btn:hover{text-decoration:none;transform:translateY(-2px)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-hi);border-color:var(--accent-hi);box-shadow:0 6px 22px rgba(63,185,80,.28)}
+.btn:hover:not(.btn-primary){border-color:var(--accent);color:var(--accent-hi)}
+
+.hero-stats{display:flex;flex-wrap:wrap;gap:34px;padding-top:26px;border-top:1px solid var(--line)}
+.stat b{display:block;font-family:var(--mono);font-size:1.5rem;color:var(--accent-hi);font-weight:500}
+.stat span{font-family:var(--mono);font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+
+/* ---------- sections ---------- */
+section{padding:78px 0}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.sec-head .num{font-family:var(--mono);font-size:13px;color:var(--accent-hi)}
+.sec-head h2{font-size:1.45rem;font-weight:600;letter-spacing:-.01em}
+.sec-head .line{flex:1;height:1px;background:linear-gradient(90deg,var(--line-hi),transparent)}
+.sec-sub{color:var(--dim);font-family:var(--mono);font-size:12.5px;margin-bottom:40px}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:44px;align-items:start}
+.about-grid p{color:var(--muted);margin-bottom:16px}
+.about-grid p strong{color:var(--text);font-weight:500}
+.facts{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);padding:22px}
+.facts h4{
+  font-family:var(--mono);font-size:11.5px;color:var(--accent-hi);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;font-weight:500;
+}
+.facts dl{display:grid;grid-template-columns:auto 1fr;gap:11px 16px;font-size:13.5px}
+.facts dt{color:var(--dim);font-family:var(--mono);font-size:12px;white-space:nowrap}
+.facts dd{color:var(--text)}
+
+/* ---------- tech stack ---------- */
+.stack-group{margin-bottom:34px}
+.stack-label{
+  font-family:var(--mono);font-size:11.5px;color:var(--dim);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;
+}
+.badges{display:flex;flex-wrap:wrap;gap:9px}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 13px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);font-family:var(--mono);font-size:12.5px;
+  color:var(--text);transition:.2s;
+}
+.badge:hover{border-color:var(--line-hi);background:var(--panel-hi);transform:translateY(-2px)}
+.badge i{font-size:12px}
+
+/* ---------- projects ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px}
+.filter{
+  padding:7px 15px;border:1px solid var(--line);border-radius:20px;
+  background:transparent;color:var(--muted);font-family:var(--mono);
+  font-size:12px;cursor:pointer;transition:.2s;
+}
+.filter:hover{border-color:var(--line-hi);color:var(--text)}
+.filter.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card{
+  position:relative;display:flex;flex-direction:column;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);padding:24px;overflow:hidden;
+  transition:.25s cubic-bezier(.2,.7,.3,1);
+}
+.card::after{
+  content:"";position:absolute;inset:0;border-radius:var(--radius);
+  background:radial-gradient(500px circle at var(--mx,50%) var(--my,0%),
+    rgba(46,164,79,.09),transparent 60%);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.card:hover{
+  border-color:var(--line-hi);transform:translateY(-4px);
+  box-shadow:0 14px 40px rgba(0,0,0,.5);
+}
+.card:hover::after{opacity:1}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}
+.card-ico{
+  width:42px;height:42px;border-radius:9px;display:grid;place-items:center;
+  font-size:16px;border:1px solid var(--line);background:var(--panel-hi);flex-shrink:0;
+}
+.tag{
+  font-family:var(--mono);font-size:10.5px;padding:4px 9px;
+  border-radius:4px;background:rgba(88,166,255,.1);
+  color:var(--blue);border:1px solid rgba(88,166,255,.22);
+  text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;
+}
+.tag.accent{background:rgba(46,164,79,.1);color:var(--accent-hi);border-color:rgba(46,164,79,.25)}
+.tag.violet{background:rgba(163,113,247,.1);color:var(--violet);border-color:rgba(163,113,247,.25)}
+.tag.pink{background:rgba(247,120,186,.1);color:var(--pink);border-color:rgba(247,120,186,.25)}
+.tag.amber{background:rgba(210,153,34,.1);color:var(--amber);border-color:rgba(210,153,34,.25)}
+.card h3{font-size:1.06rem;font-weight:600;margin-bottom:5px;letter-spacing:-.01em}
+.card .role{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-bottom:12px}
+.card p{font-size:14px;color:var(--muted);margin-bottom:16px;flex:1}
+.card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.mini{
+  font-family:var(--mono);font-size:10.5px;padding:3px 8px;
+  border-radius:4px;background:var(--bg-alt);
+  border:1px solid var(--line);color:var(--muted);
+}
+.card-links{display:flex;gap:16px;padding-top:14px;border-top:1px solid var(--line)}
+.card-links a{
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.card-links a:hover{color:var(--accent-hi);text-decoration:none}
+.verify{
+  margin-top:12px;padding:9px 11px;border-radius:6px;
+  background:rgba(210,153,34,.07);border:1px solid rgba(210,153,34,.2);
+  font-family:var(--mono);font-size:10.5px;color:var(--amber);line-height:1.5;
+}
+
+/* ---------- learning / mindset ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.panel{
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);padding:26px;
+}
+.panel h3{
+  font-size:1.02rem;font-weight:600;margin-bottom:18px;
+  display:flex;align-items:center;gap:10px;padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+.panel h3 i{color:var(--accent-hi);font-size:14px}
+.list{list-style:none;display:flex;flex-direction:column;gap:13px}
+.list li{display:flex;gap:12px;font-size:14px;color:var(--muted);align-items:flex-start}
+.list li i{color:var(--accent);font-size:11px;margin-top:6px;flex-shrink:0}
+.list li b{color:var(--text);font-weight:500;display:block;margin-bottom:2px;font-size:14px}
+.list li span{font-size:13.5px}
+
+/* ---------- contact ---------- */
+.contact-box{
+  border:1px solid var(--line-hi);border-radius:14px;
+  background:linear-gradient(150deg,var(--panel),var(--bg-alt));
+  padding:52px 40px;text-align:center;position:relative;overflow:hidden;
+}
+.contact-box::before{
+  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:340px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.contact-box h2{font-size:1.7rem;font-weight:700;margin-bottom:12px;letter-spacing:-.02em}
+.contact-box p{color:var(--muted);max-width:520px;margin:0 auto 28px}
+.socials{display:flex;justify-content:center;flex-wrap:wrap;gap:11px;margin-bottom:26px}
+.social{
+  display:inline-flex;align-items:center;gap:9px;padding:10px 18px;
+  border:1px solid var(--line);border-radius:7px;background:var(--panel);
+  font-family:var(--mono);font-size:12.5px;color:var(--muted);transition:.2s;
+}
+.social:hover{text-decoration:none;color:var(--text);border-color:var(--accent);transform:translateY(-2px)}
+.availability{
+  display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:12px;color:var(--muted);padding-top:22px;border-top:1px solid var(--line);
+}
+.availability .live{width:7px;height:7px;border-radius:50%;background:var(--accent-hi);box-shadow:0 0 0 0 rgba(63,185,80,.6);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,185,80,.55)}70%{box-shadow:0 0 0 9px rgba(63,185,80,0)}100%{box-shadow:0 0 0 0 rgba(63,185,80,0)}}
+
+/* ---------- footer ---------- */
+footer{
+  border-top:1px solid var(--line);padding:26px 0;margin-top:20px;
+  font-family:var(--mono);font-size:11.5px;color:var(--dim);
+}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.foot a{color:var(--muted)}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .about-grid,.split{grid-template-columns:1fr}
+  .nav-links{
+    position:fixed;inset:60px 0 auto;background:var(--bg-alt);
+    border-bottom:1px solid var(--line);flex-direction:column;gap:0;
+    padding:8px 0;display:none;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{display:block;padding:13px 24px}
+  .nav-toggle{display:block}
+  .hero{padding:120px 0 60px}
+  .hero-stats{gap:22px}
+  .contact-box{padding:40px 22px}
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .hero-stats>div{width:calc(50% - 11px)}
+  .stat b{font-size:1.25rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header id="hdr">
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="brand"><i class="fa-solid fa-code"></i> jfhontucan<span style="color:var(--accent-hi)">.</span></a>
+      <ul class="nav-links" id="menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#learning">Learning</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navBtn" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <h1>Sir JohnFrancis Hontucan</h1>
+    <p class="typed-line">Fresh BSIT graduate building real software — currently into <b>C++</b>, <b>C#</b>, and <b>Java</b>.</p>
+    <p class="hero-desc">
+      I don't have years of production experience yet. What I have is a working process,
+      a habit of finishing things, and an honest record of the code I've written.
+      <strong>Perseverance, continuous learning, practical building.</strong>
+    </p>
+
+    <div class="btn-row">
+      <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-folder-open"></i> View Projects</a>
+      <a href="#contact" class="btn"><i class="fa-solid fa-paper-plane"></i> Get in touch</a>
+      <a href="https://github.com/YOUR_USERNAME" class="btn"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="https://linkedin.com/in/YOUR_PROFILE" class="btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><b>5</b><span>Projects</span></div>
+      <div class="stat"><b>7</b><span>Languages</span></div>
+      <div class="stat"><b>4</b><span>Categories</span></div>
+      <div class="stat"><b>100%</b><span>Built &amp; shipped</span></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="wrap">
+    <div class="sec-head reveal"><span class="num">01</span><h2>About Me</h2><span class="line"></span></div>
+    <p class="sec-sub reveal">$ cat about.md</p>
+
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I'm a <strong>Bachelor of Science in Information Technology</strong> graduate looking for an entry-level software engineering role where I can keep learning at speed and contribute real work.</p>
+        <p>My academic work spans programming fundamentals, object-oriented design, data structures, and web technologies. Outside of coursework I build small projects to hold onto concepts — a Windows Forms enrollment system, a binary calculator in C++, a front-end budget tracker.</p>
+        <p>I write C++ and Java for the fundamentals, C# for desktop work, and HTML/CSS/JavaScript when the problem is a browser problem. Figma is where I go when the problem is a screen.</p>
+        <p>Right now I'm focused on data structures and algorithms, cleaner C# architecture, and getting better at responsive front-end work.</p>
+      </div>
+
+      <aside class="facts reveal">
+        <h4><i class="fa-solid fa-id-card" style="margin-right:8px"></i>Quick Facts</h4>
+        <dl>
+          <dt>Name</dt><dd>Sir JohnFrancis Hontucan</dd>
+          <dt>Degree</dt><dd>BSIT — Information Technology</dd>
+          <dt>Status</dt><dd>Fresh graduate, open to work</dd>
+          <dt>Target</dt><dd>Entry-level Software Engineer</dd>
+          <dt>Primary</dt><dd>C++, C#, Java</dd>
+          <dt>Secondary</dt><dd>HTML, CSS, JavaScript, PHP</dd>
+          <dt>Editor</dt><dd>Visual Studio, VS Code</dd>
+          <dt>Versioning</dt><dd>Git, GitHub</dd>
+          <dt>Design</dt><dd>Figma, Canva</dd>
+          <dt>Based in</dt><dd>[NEEDS VERIFICATION]</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack" class="wrap">
+    <div class="sec-head reveal"><span class="num">02</span><h2>Tech Stack</h2><span class="line"></span></div>
+    <p class="sec-sub reveal">$ ls -la ~/toolbox</p>
+
+    <div class="stack-group reveal">
+      <div class="stack-label">Languages</div>
+      <div class="badges">
+        <span class="badge"><i class="fa-brands fa-cplusplus" style="color:#00599c"></i> C++</span>
+        <span class="badge"><i class="fa-brands fa-microsoft" style="color:#239120"></i> C#</span>
+        <span class="badge"><i class="fa-brands fa-java" style="color:#ed8b00"></i> Java</span>
+        <span class="badge"><i class="fa-brands fa-php" style="color:#777bb4"></i> PHP</span>
+        <span class="badge"><i class="fa-brands fa-html5" style="color:#e34f26"></i> HTML5</span>
+        <span class="badge"><i class="fa-brands fa-css3-alt" style="color:#1572b6"></i> CSS3</span>
+        <span class="badge"><i class="fa-brands fa-js" style="color:#f7df1e"></i> JavaScript</span>
+      </div>
+    </div>
+
+    <div class="stack-group reveal">
+      <div class="stack-label">Tools &amp; Platforms</div>
+      <div class="badges">
+        <span class="badge"><i class="fa-solid fa-code" style="color:#5c2d91"></i> Visual Studio</span>
+        <span class="badge"><i class="fa-solid fa-code" style="color:#007acc"></i> VS Code</span>
+        <span class="badge"><i class="fa-brands fa-git-alt" style="color:#f05032"></i> Git</span>
+        <span class="badge"><i class="fa-brands fa-github" style="color:#e6edf3"></i> GitHub</span>
+        <span class="badge"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+        <span class="badge"><i class="fa-solid fa-pen-nib" style="color:#00c4cc"></i> Canva</span>
+        <span class="badge"><i class="fa-brands fa-microsoft" style="color:#d83b01"></i> Microsoft Office</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="wrap">
+    <div class="sec-head reveal"><span class="num">03</span><h2>Featured Projects</h2><span class="line"></span></div>
+    <p class="sec-sub reveal">$ find ./projects -name "*.{cpp,cs,java,html}"</p>
+
+    <div class="filters reveal" id="filters">
+      <button class="filter active" data-f="all">All</button>
+      <button class="filter" data-f="desktop">Desktop</button>
+      <button class="filter" data-f="systems">Systems</button>
+      <button class="filter" data-f="oop">OOP</button>
+      <button class="filter" data-f="web">Web</button>
+      <button class="filter" data-f="design">UI/UX</button>
+    </div>
+
+    <div class="grid" id="grid">
+
+      <!-- Enrollment System -->
+      <article class="card reveal" data-cat="desktop">
+        <div class="card-top">
+          <div class="card-ico" style="color:#58a6ff"><i class="fa-solid fa-user-graduate"></i></div>
+          <span class="tag">Desktop App</span>
+        </div>
+        <h3>Enrollment System</h3>
+        <div class="role">C# · Windows Forms · Academic Project</div>
+        <p>A Windows Forms application for academic record handling: credential-based login, Student and Faculty management modules, and a summary Dashboard. Built to practice event-driven programming, form navigation, and data layer separation.</p>
+        <div class="tags"><span class="mini">C#</span><span class="mini">Windows Forms</span><span class="mini">OOP</span><span class="mini">Event-Driven</span></div>
+        <div class="card-links">
+          <a href="#"><i class="fa-brands fa-github"></i> Source</a>
+          <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
+        </div>
+        <div class="verify"><i class="fa-solid fa-circle-info"></i> Storage layer and specific modules marked <em>[NEEDS VERIFICATION]</em> until confirmed against source.</div>
+      </article>
+
+      <!-- Binary Calculator -->
+      <article class="card reveal" data-cat="systems">
+        <div class="card-top">
+          <div class="card-ico" style="color:#39c5cf"><i class="fa-solid fa-calculator"></i></div>
+          <span class="tag accent">C++</span>
+        </div>
+        <h3>Binary Calculator</h3>
+        <div class="role">C++ · Console Application</div>
+        <p>A C++ console project implementing binary arithmetic — working through number-base conversion and bitwise operations as the core exercise.</p>
+        <div class="tags"><span class="mini">C++</span><span class="mini">Console</span><span class="mini">Bitwise Operations</span></div>
+        <div class="card-links">
+          <a href="#"><i class="fa-brands fa-github"></i> Source</a>
+        </div>
+        <div class="verify"><i class="fa-solid fa-circle-info"></i> Additional features: <em>[VERIFY FROM C++ SOURCE CODE]</em>. Distinct from a separate Visual Basic .NET calculator project.</div>
+      </article>
+
+      <!-- SHOPPA CO. -->
+      <article class="card reveal" data-cat="oop">
+        <div class="card-top">
+          <div class="card-ico" style="color:#d29922"><i class="fa-solid fa-mug-hot"></i></div>
+          <span class="tag amber">Academic</span>
+        </div>
+        <h3>SHOPPA CO. OOP</h3>
+        <div class="role">Java · Object-Oriented Programming</div>
+        <p>An academic Java project built around OOP principles — encapsulation, inheritance, polymorphism, and abstraction — applied to a point-of-sale style domain.</p>
+        <div class="tags"><span class="mini">Java</span><span class="mini">OOP</span><span class="mini">Console</span></div>
+        <div class="card-links">
+          <a href="#"><i class="fa-brands fa-github"></i> Source</a>
+        </div>
+      </article>
+
+      <!-- Digital Finance Buddy -->
+      <article class="card reveal" data-cat="web">
+        <div class="card-top">
+          <div class="card-ico" style="color:#a371f7"><i class="fa-solid fa-chart-pie"></i></div>
+          <span class="tag violet">Front-End</span>
+        </div>
+        <h3>Digital Finance Buddy</h3>
+        <div class="role">HTML · CSS · JavaScript</div>
+        <p>A budget management tool built with plain HTML, CSS, and JavaScript. The focus is DOM manipulation and UI logic — rendering expense entries, updating totals, and keeping interface state consistent as the user interacts with it.</p>
+        <div class="tags"><span class="mini">HTML</span><span class="mini">CSS</span><span class="mini">JavaScript</span><span class="mini">DOM Manipulation</span></div>
+        <div class="card-links">
+          <a href="#"><i class="fa-brands fa-github"></i> Source</a>
+          <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>
+        </div>
+      </article>
+
+      <!-- LookIT -->
+      <article class="card reveal" data-cat="design">
+        <div class="card-top">
+          <div class="card-ico" style="color:#f778ba"><i class="fa-solid fa-shield-halved"></i></div>
+          <span class="tag pink">UI/UX</span>
+        </div>
+        <h3>LookIT</h3>
+        <div class="role">Figma · Mobile Home-Security Prototype</div>
+        <p>A mobile home-security app prototype designed in Figma — user flows, screen hierarchy, and component design for a connected-camera product.</p>
+        <div class="tags"><span class="mini">Figma</span><span class="mini">Mobile UI</span><span class="mini">Prototyping</span><span class="mini">User Flows</span></div>
+        <div class="card-links">
+          <a href="#"><i class="fa-brands fa-figma"></i> Prototype</a>
+          <a href="#"><i class="fa-solid fa-images"></i> Screens</a>
+        </div>
+        <div class="verify"><i class="fa-solid fa-circle-info"></i> Screen count and prototype links <em>[NEEDS VERIFICATION]</em>.</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- LEARNING + MINDSET -->
+  <section id="learning" class="wrap">
+    <div class="sec-head reveal"><span class="num">04</span><h2>Learning &amp; Mindset</h2><span class="line"></span></div>
+    <p class="sec-sub reveal">$ cat learning.md mindset.md</p>
+
+    <div class="split">
+      <div class="panel reveal">
+        <h3><i class="fa-solid fa-book-open"></i> Currently Learning</h3>
+        <ul class="list">
+          <li><i class="fa-solid fa-circle"></i><div><b>Data Structures &amp; Algorithms</b><span>Working through core structures and complexity in C++ and Java.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Cleaner C# Architecture</b><span>Separating logic from UI, naming things properly, smaller classes.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Git Workflows</b><span>Branching, clean commit history, pull requests, reviewing my own diffs.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Responsive Front-End</b><span>Flexbox, Grid, and layouts that don't break on a phone.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Figma Auto-Layout</b><span>Component systems instead of one-off screens.</span></div></li>
+        </ul>
+      </div>
+
+      <div class="panel reveal">
+        <h3><i class="fa-solid fa-compass"></i> Developer Mindset</h3>
+        <ul class="list">
+          <li><i class="fa-solid fa-circle"></i><div><b>Perseverance</b><span>Most bugs are a problem I haven't understood yet. I stay until the cause is clear, not until the symptom disappears.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Continuous Learning</b><span>New tool, small project, ship it. Learning something means using it on something real.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Practical Building</b><span>Reading tutorials isn't progress. Code that runs — and then code rewritten better — is.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Clean Over Clever</b><span>Readable naming, small functions, comments that explain why, not what.</span></div></li>
+          <li><i class="fa-solid fa-circle"></i><div><b>Honest Work</b><span>This profile shows what I actually built. No experience I haven't earned yet.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="wrap">
+    <div class="sec-head reveal"><span class="num">05</span><h2>Contact</h2><span class="line"></span></div>
+    <p class="sec-sub reveal">$ ./say-hello.sh</p>
+
+    <div class="contact-box reveal">
+      <h2>Let's build something.</h2>
+      <p>I'm actively looking for entry-level software engineering roles and internships. If your team needs someone who ships, learns fast, and documents honestly — my inbox is open.</p>
+      <div class="socials">
+        <a href="mailto:your@email.com" class="social"><i class="fa-solid fa-envelope"></i> your@email.com</a>
+        <a href="https://github.com/YOUR_USERNAME" class="social"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/YOUR_PROFILE" class="social"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      </div>
+      <div class="availability"><span class="live"></span> Open to entry-level roles &amp; internships — remote or onsite</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Sir JohnFrancis Hontucan — built from scratch</span>
+    <span><a href="https://github.com/YOUR_USERNAME"><i class="fa-brands fa-github"></i> Source on GitHub</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // scroll progress + header state
+  var p = document.getElementById('progress'), hdr = document.getElementById('hdr');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    p.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    hdr.classList.toggle('scrolled', h.scrollTop > 12);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // mobile nav
+  var btn = document.getElementById('navBtn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', function(){
+    menu.classList.toggle('open');
+    btn.innerHTML = menu.classList.contains('open')
+      ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+  });
+  menu.addEventListener('click', function(e){
+    if(e.target.tagName === 'A'){
+      menu.classList.remove('open');
+      btn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }
+  });
+
+  // reveal on scroll
+  var items = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e, i){
+        if(e.isIntersecting){
+          setTimeout(function(){ e.target.classList.add('in'); }, Math.min(i * 55, 320));
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    items.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // project filter
+  var f = document.getElementById('filters'), grid = document.getElementById('grid');
+  f.addEventListener('click', function(e){
+    var b = e.target.closest('.filter');
+    if(!b) return;
+    f.querySelectorAll('.filter').forEach(function(x){ x.classList.remove('active'); });
+    b.classList.add('active');
+    var val = b.dataset.f;
+    grid.querySelectorAll('.card').forEach(function(c){
+      var show = val === 'all' || c.dataset.cat === val;
+      c.style.display = show ? '' : 'none';
+      if(show){
+        c.style.animation = 'none';
+        void c.offsetWidth;
+        c.style.animation = 'fadeUp .35s ease forwards';
+      }
+    });
+  });
+
+  // card spotlight follows cursor
+  grid.querySelectorAll('.card').forEach(function(card){
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  var s = document.createElement('style');
+  s.textContent = '@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}';
+  document.head.appendChild(s);
+})();
+</script>
+
+</body>
+</html>
